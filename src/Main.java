@@ -1,7 +1,5 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,9 +20,11 @@ public class Main {
 
             if (menuOption == 1) {
                 //Add method
+                HashmapAdd(records);
             }
             else if (menuOption == 2) {
                 //Delete
+                HashDelete(records);
             }
             else if (menuOption == 3) {
                 //Display person
@@ -36,6 +36,7 @@ public class Main {
             }
             else if (menuOption == 5) {
                 //Edit
+                HashmapEdit(records);
             }
         }
     }
@@ -51,9 +52,16 @@ public class Main {
     }
 
     public static void viewAll(HashMap<String, String> records) {
-        for (Map.Entry<String, String> entry: records.entrySet()) {
-            System.out.print("Name " + entry.getKey());
-            System.out.print("Tel no " + entry.getValue());
+        Map<String, String> sorteArr = records.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+        for (Map.Entry<String, String> entry: sorteArr.entrySet()) {
+            System.out.println("Name " + entry.getKey());
+            System.out.println("Tel no " + entry.getValue());
         }
 
         if (records.isEmpty()) {
@@ -71,5 +79,64 @@ public class Main {
         }
         else {
         System.out.println("The telephone number is " + records.get(name));}
+    }
+
+    public static void HashmapAdd(HashMap<String, String> person){
+        String name = "";
+        String tel = "";
+        Scanner ac = new Scanner(System.in);
+
+        System.out.println("Enter the name of the person");
+        name = ac.nextLine();
+
+        if(person.containsKey(name)){
+            System.out.println("The record is existing");
+        }
+        else {
+            System.out.println("Enter the tel number");
+            tel = ac.nextLine();
+
+            person.put(name, tel);
+
+            System.out.println("One record added");
+        }
+    }
+
+    public static void HashDelete(HashMap<String, String> person){
+        String name = "";
+        String tel = "";
+        Scanner ac = new Scanner(System.in);
+        System.out.println("Enter the name of the person you want to delete");
+        name = ac.nextLine();
+
+        if(!person.containsKey(name)){
+            System.out.println("The record is not existing");
+        }
+        else {
+            person.remove(name);
+
+            System.out.println("The record is deleted");
+        }
+    }
+
+    public static void HashmapEdit(HashMap<String, String> person){
+        String name = "";
+        String tel = "";
+        Scanner ac = new Scanner(System.in);
+
+        System.out.println("Enter the name of the person");
+        name = ac.nextLine();
+
+        if(!person.containsKey(name)){
+            System.out.println("The record is not existing");
+        }
+        else {
+            System.out.println("Enter the tel number");
+            tel = ac.nextLine();
+
+            person.replace(name, tel);
+
+            System.out.println("One record edit");
+        }
     }
 }
