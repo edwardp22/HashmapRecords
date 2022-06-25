@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        HashMap<String, String> records = new HashMap<String, String>()
+        HashMap<String, String> records = new HashMap<String, String>();
         int menuOption = 0;
 
         while (menuOption != 6) {
