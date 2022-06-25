@@ -55,6 +55,10 @@ public class Main {
             System.out.print("Name " + entry.getKey());
             System.out.print("Tel no " + entry.getValue());
         }
+
+        if (records.isEmpty()) {
+            System.out.println("No records yet");
+        }
     }
 
     public static void displayPerson(HashMap<String, String> records) {
@@ -62,6 +66,10 @@ public class Main {
         System.out.println("Enter the name of the person ");
         String name = input.nextLine();
 
-        System.out.println("The telefone number is " + records.get(name));
+        if (records.get(name) == null) {
+            System.out.println("The record is not existing");
+        }
+        else {
+        System.out.println("The telephone number is " + records.get(name));}
     }
 }
